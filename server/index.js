@@ -1,30 +1,18 @@
+const path = require('path');
 const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const PORT = process.env.PORT || 3000;
 const app = express();
-const router = express.Router();
-module.exports = router
+const server = app.listen(PORT, () => { console.log(`Listening on ${PORT}`) })
+module.exports = app;
 
-router.get('/', (req, res) => {
-	res.send('homepage');
-});
+// logging middleware
+app.use(morgan('dev'));
 
+// body parsing middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/', router);
-
-app.use((req, res, next) => {
-  const error = new Error('Not Found')
-  error.status = 404
-  next(error)
-})
-
-app.listen(3000, () => {
-	console.log("Listening on 3000.")
-})
-
-let config = {
-apiKey: "AIzaSyC4esZbPjc4ONnF3wRuwhrb7LCDjATePCE",
-authDomain: "boardwalk-eb71e.firebaseapp.com",
-databaseURL: "https://boardwalk-eb71e.firebaseio.com",
-projectId: "boardwalk-eb71e",
-storageBucket: "boardwalk-eb71e.appspot.com",
-messagingSenderId: "856677490237"
-};
+// api route
+app.use('/api', require('./api'))
