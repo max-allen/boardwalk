@@ -1,17 +1,24 @@
-const firebase = require('firebase')
-const express = require('express')
-const path = require('path')
+const express = require('express');
+const app = express();
+const router = express.Router();
+module.exports = router
 
-let app =  express();
+router.get('/', (req, res) => {
+	res.send('homepage');
+});
+
+
+app.use('/', router);
+
+app.use((req, res, next) => {
+  const error = new Error('Not Found')
+  error.status = 404
+  next(error)
+})
 
 app.listen(3000, () => {
 	console.log("Listening on 3000.")
 })
-
-let fbData = {}
-
-app.get('/api/db', (req,res) => res.json(fbData))
-app.use((req,res) => console.log('error: not found'))
 
 let config = {
 apiKey: "AIzaSyC4esZbPjc4ONnF3wRuwhrb7LCDjATePCE",
@@ -21,17 +28,3 @@ projectId: "boardwalk-eb71e",
 storageBucket: "boardwalk-eb71e.appspot.com",
 messagingSenderId: "856677490237"
 };
-
-firebase.initializeApp(config);
-
-const writeUserData = (userId, name, email, imageUrl) => {
-	firebase.database().ref('users/'+userId).set({
-		username:name,
-		email:email,
-		profile_picture:imageUrl
-	});
-}
-
-const deleteData = (data) =>{
-	firebase.database().ref(data).remove();
-}
