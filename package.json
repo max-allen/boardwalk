@@ -1,0 +1,19 @@
+{
+  "name": "boardwalk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "t"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/max-allen/boardwalk.git"
+  },
+  "author": "Max Allen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/max-allen/boardwalk/issues"
+  },
+  "homepage": "https://github.com/max-allen/boardwalk#readme"
+}
